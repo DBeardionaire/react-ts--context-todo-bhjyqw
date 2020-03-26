@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import { TodoPage } from "./Pages/todo/todoPage";
+import TodoPage from "./Pages/todo/todoPage";
 import "./style.css";
 import "todomvc-app-css/index.css";
 

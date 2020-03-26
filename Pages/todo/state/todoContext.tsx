@@ -6,6 +6,7 @@ import { ValueOf } from "../../../types/ValueOf";
 import { AsyncData, ContextProviderProps } from "../../../types/contextHelpers";
 
 import { TodoModel } from "../models/todo";
+import { addTodo } from './todoAsyncActions'
 
 // 1 ACTIONS
 
@@ -116,7 +117,9 @@ export const useTodos = () => {
   const dispatch = useTodoDispatch();
 
   // for async actions
-  const actions = {};
+  const actions = {
+    addTodoAsync: addTodo(dispatch) 
+  };
 
   return [useTodoState(), actions, dispatch] as [
     ReturnType<typeof useTodoState>,
@@ -128,8 +131,6 @@ export const useTodos = () => {
 // for dispatching sync actions
 useTodos.actionCreators = actionCreators;
 
-const TodosStateContextProvider = TodosStateContext.Provider
-const TodosDispatchContextProvider = TodosDispatchContext.Provider
 
 export const TodoProvider = ({ children }: ContextProviderProps) => {
   // Using logging when in development
@@ -144,10 +145,10 @@ export const TodoProvider = ({ children }: ContextProviderProps) => {
   const [state, dispatch] = useCustomReducer(todoReducer, initialState);
 
   return (
-    <TodosStateContextProvider value={state}>
-      <TodosDispatchContextProvider value={dispatch}>
+    <TodosStateContext.Provider value={state}>
+      <TodosDispatchContext.Provider value={dispatch}>
         {children}
-      </TodosDispatchContextProvider>
-    </TodosStateContextProvider>
+      </TodosDispatchContext.Provider>
+    </TodosStateContext.Provider>
   );
 };

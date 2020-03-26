@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import { v4 } from "uuid";
-import { TodoItem } from "../models/todo";
+import { TodoModel } from "../models/todo";
 import { TodoAction, useTodos } from "./todoContext";
 import { delayPromise } from "../../../helpers/helpers";
 
@@ -9,7 +9,7 @@ const newTodo = (title: string = "") =>
     done: false,
     id: v4(),
     title: title.trim()
-  } as TodoItem);
+  } as TodoModel);
 
 export const fetchTodos = (dispatch: Dispatch<TodoAction>) => async (
   query?: any
@@ -19,7 +19,7 @@ export const fetchTodos = (dispatch: Dispatch<TodoAction>) => async (
   try {
     dispatch(loading(true));
 
-    const result: TodoItem[] = await delayPromise(2000)(query).then(
+    const result: TodoModel[] = await delayPromise(2000)(query).then(
       // fake result from server
       () => [
         newTodo("Something needs to be done"),
@@ -43,7 +43,7 @@ export const addTodo = (dispatch: Dispatch<TodoAction>) => async (
   try {
     dispatch(loading(true));
 
-    const result: TodoItem = await delayPromise(2000)(title).then(newTodo);
+    const result: TodoModel = await delayPromise(2000)(title).then(newTodo);
 
     dispatch(addedTodo(result));
     dispatch(loading(false));

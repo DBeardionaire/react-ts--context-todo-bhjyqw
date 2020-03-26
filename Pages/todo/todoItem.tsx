@@ -1,8 +1,12 @@
 import React from "react";
-import { TodoModel } from './models/todo'
+import { TodoModel } from "./models/todo";
 
-export const TodoItem = (todo: TodoModel) => {
-  const editing = false
+type TodoItemProps = {
+  todo: TodoModel;
+};
+
+export const TodoItem = ({ todo }: TodoItemProps) => {
+  const editing = false;
   return (
     <li
       // onClick={handleViewClick}
@@ -16,19 +20,19 @@ export const TodoItem = (todo: TodoModel) => {
           onChange={console.log}
           autoFocus={true}
         />
-        <label>{todo.label}</label>
+        <label>{todo.title}</label>
         <button className="destroy" onClick={console.log} />
       </div>
     </li>
   );
 };
 
-      // {editing && (
-      //   <input
-      //     ref={ref}
-      //     className="edit"
-      //     value={todo.label}
-      //     onChange={onChange}
-      //     onKeyPress={onEnter}
-      //   />
-      // )}
+// {editing && (
+//   <input
+//     ref={ref}
+//     className="edit"
+//     value={todo.label}
+//     onChange={onChange}
+//     onKeyPress={onEnter}
+//   />
+// )}
