@@ -1,0 +1,24 @@
+{
+  "name": "react-ts",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@types/react": "^16.8.2",
+    "@types/react-dom": "^16.8.0",
+    "immer": "^6.0.1",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-scripts": "^3.4.0",
+    "rxjs": "^6.5.4",
+    "todomvc-app-css": "^2.3.0",
+    "typescript": "3.7.2",
+    "uuid": "^7.0.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {}
+}
