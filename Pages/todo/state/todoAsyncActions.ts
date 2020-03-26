@@ -2,7 +2,7 @@ import { Dispatch } from "react";
 import { v4 } from "uuid";
 import { TodoItem } from "../models/todo";
 import { TodoAction, useTodos } from "./todoContext";
-import { delayPromise } from "../../helpers/helpers";
+import { delayPromise } from "../../../helpers/helpers";
 
 const newTodo = (title: string = "") =>
   ({

@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useReducer, Dispatch } from "react";
 import produce from "immer";
 
-import { useReducerWithLogs } from "../../helpers/helpers";
-import { ValueOf } from "../../types/ValueOf";
-import { AsyncData, ContextProviderProps } from "../../types/contextHelpers";
+import { useReducerWithLogs } from "../../../helpers/helpers";
+import { ValueOf } from "../../../types/ValueOf";
+import { AsyncData, ContextProviderProps } from "../../../types/contextHelpers";
 
 import { TodoModel } from "../models/todo";
 
