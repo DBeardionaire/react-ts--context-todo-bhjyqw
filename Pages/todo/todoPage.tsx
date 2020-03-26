@@ -2,10 +2,22 @@ import React, { Fragment } from "react";
 import { TodoItem } from "./todoItem";
 import { useTodos, TodoProvider } from "./state/todoContext";
 import { TodoModel } from "../../Pages/todo/models/todo";
+import { useInput, useOnEnter } from '../../helpers/helpers'
 
 export const TodoPage = () => {
-  const [{todos}] = useTodos();
+  const [{todos}, { addTodoAsync }] = useTodos();
   
+  const [newValue, onNewValueChange, setNewValue] = useInput('')
+  const onAddTodo = useOnEnter(
+    () => {
+      if (newValue) {
+        addTodoAsync(newValue);
+        setNewValue("");
+      }
+    },
+    [newValue]
+  );
+
   return (
     <Fragment>
       <header className="header">
