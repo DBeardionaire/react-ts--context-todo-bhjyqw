@@ -13,11 +13,11 @@ import { addTodo } from './todoAsyncActions'
 const ActionTypes = {
   TODOS_LOADED: "TODOS_LOADED",
   TODO_ADDED: "TODO_ADDED",
-  TODO_DONE: "TODOS_DONE",
+  TODO_SET: "TODOS_SET",
   TODO_TOGGLE_DONE: "TODO_TOGGLE_DONE",
   TODO_DELETED: "TODO_DELETED",
   LOADING: "LOADING",
-  // CLEAR: "CLEAR"
+  CLEAR: "CLEAR"
 } as const;
 
 const actionCreators = {
@@ -29,8 +29,8 @@ const actionCreators = {
     type: ActionTypes.TODO_ADDED,
     payload: todo
   }),
-  todoSetDone: (todo: TodoModel) => ({
-    type: ActionTypes.TODO_DONE,
+  setTodo: (todo: TodoModel) => ({
+    type: ActionTypes.TODO_SET,
     payload: todo
   }),
   toggleTodo: (id: string) => ({
@@ -45,7 +45,7 @@ const actionCreators = {
     type: ActionTypes.LOADING,
     payload: loading
   }),
-  // clearTodos: () => ({ type: ActionTypes.CLEAR })
+  clearTodos: () => ({ type: ActionTypes.CLEAR })
 } as const;
 
 export type TodoAction = ReturnType<ValueOf<typeof actionCreators>>;
@@ -58,7 +58,7 @@ type TodoState = {
 
 // CREATE REACT CONTEXTS FOR STATE & DISPATCH
 const TodosStateContext = createContext<TodoState | null>(null);
-const TodosDispatchContext = createContext<Dispatch<TodoState> | null>(null);
+const TodosDispatchContext = createContext<Dispatch<TodoAction> | null>(null);
 
 const initialState: TodoState = {
   todos: [],
@@ -77,19 +77,35 @@ const todoReducer = produce((draft: TodoState, action: TodoAction) => {
     case ActionTypes.TODO_ADDED:
       draft.todos.unshift(action.payload);
       return;
-    case ActionTypes.TODO_DONE:
-      draft.loading = false;
-      return;
+    case ActionTypes.TODO_SET:
+      return {
+        loading: false,
+        todos: draft.todos.map(t =>
+          t.id === action.payload.id
+            ? action.payload
+            : t
+        )
+      }
     case ActionTypes.TODO_TOGGLE_DONE:
-      draft.loading = false;
-      return;
+      return {
+        loading: false,
+        todos: draft.todos.map(t =>
+          t.id === action.payload
+            ? { ...t, done: !t.done }
+            : t
+        )
+      }
     case ActionTypes.LOADING:
       draft.loading = action.payload;
       return;
     case TODO_DELETED:
-      return;
-    // case ActionTypes.CLEAR:
-    //   return initialState; // returning anything replaces state
+      return {
+        todos: draft.todos.filter(t =>
+          t.id !== action.payload
+        )
+      }
+    case ActionTypes.CLEAR:
+      return initialState; // returning anything replaces state
   }
 });
 
@@ -115,17 +131,22 @@ const useTodoDispatch = () => {
 
 export const useTodos = () => {
   const dispatch = useTodoDispatch();
+  const { todos } = useTodoState()
 
   // for async actions
   const actions = {
-    addTodoAsync: addTodo(dispatch as any)
+    addTodoAsync: addTodo(dispatch),
   }
 
-  return [useTodoState(), actions, dispatch] as [
-    ReturnType<typeof useTodoState>,
-    typeof actions,
-    typeof dispatch
-  ]
+  return [
+    todos,
+    actions,
+    dispatch
+  ] as [
+      typeof todos,
+      typeof actions,
+      typeof dispatch
+    ]
 }
 
 // for dispatching sync actions

@@ -31,7 +31,7 @@ export const fetchTodos = (dispatch: Dispatch<TodoAction>) => async (
     dispatch(todosLoaded(result));
     dispatch(loading(false));
   } catch (e) {
-    console.error("fetchFilesAsync", e);
+    console.error("fetchTodosAsync", e);
   }
 };
 
@@ -48,6 +48,6 @@ export const addTodo = (dispatch: Dispatch<TodoAction>) => async (
     dispatch(addedTodo(result));
     dispatch(loading(false));
   } catch (e) {
-    console.error("fetchFilesAsync", e);
+    console.error("addTodoAsync", e);
   }
 };
