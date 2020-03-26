@@ -18,7 +18,7 @@ const ActionTypes = {
   TODO_DELETED: "TODO_DELETED",
   LOADING: "LOADING",
   CLEAR: "CLEAR"
-} as const;
+} as const
 
 const actionCreators = {
   todosLoaded: (todos: TodoModel[]) => ({
@@ -75,7 +75,7 @@ const todoReducer = produce((draft: TodoState, action: TodoAction) => {
       draft.loading = false;
       return; // returning nothing when only modifying state
     case ActionTypes.TODO_ADDED:
-      draft.todos.unshift(action.payload);
+      draft.todos.unshift(action.payload)
       return;
     case ActionTypes.TODO_SET:
       return {
@@ -130,12 +130,13 @@ const useTodoDispatch = () => {
 // USE TODO - COMBINE STATE & DISPATCH CONTEXT CONSUMER HOOKS + create async actions
 
 export const useTodos = () => {
-  const dispatch = useTodoDispatch();
+  const dispatch = useTodoDispatch()
   const { todos } = useTodoState()
 
   // for async actions
   const actions = {
     addTodoAsync: addTodo(dispatch),
+    ...actionCreators
   }
 
   return [

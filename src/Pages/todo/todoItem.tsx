@@ -8,10 +8,10 @@ type TodoItemProps = {
   todo: TodoModel
 }
 
-const { setTodo, toggleTodo, deleteTodo } = useTodos.actionCreators
+// const { setTodo, toggleTodo, deleteTodo } = useTodos.actionCreators
 
 export const TodoItem = ({ todo }: TodoItemProps) => {
-  const [,, dispatch] = useTodos();
+  const [,{setTodo, toggleTodo, deleteTodo}, dispatch] = useTodos();
 
   const [editing, setEditing] = useState(() => false);
 
