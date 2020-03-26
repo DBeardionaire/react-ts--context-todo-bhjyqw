@@ -2,8 +2,8 @@ import React, { createContext, useContext, useReducer, Dispatch } from "react";
 import produce from "immer";
 
 import { useReducerWithLogs } from "../../../helpers/helpers";
-import { ValueOf } from "../../../types/ValueOf";
-import { AsyncData, ContextProviderProps } from "../../../types/contextHelpers";
+import { ValueOf } from "../../../../types/ValueOf";
+import { AsyncData, ContextProviderProps } from "../../../../types/contextHelpers";
 
 import { TodoModel } from "../models/todo";
 import { addTodo } from './todoAsyncActions'
@@ -17,7 +17,7 @@ const ActionTypes = {
   TODO_TOGGLE_DONE: "TODO_TOGGLE_DONE",
   TODO_DELETED: "TODO_DELETED",
   LOADING: "LOADING",
-  CLEAR: "CLEAR"
+  // CLEAR: "CLEAR"
 } as const;
 
 const actionCreators = {
@@ -45,7 +45,7 @@ const actionCreators = {
     type: ActionTypes.LOADING,
     payload: loading
   }),
-  clearTodos: () => ({ type: ActionTypes.CLEAR })
+  // clearTodos: () => ({ type: ActionTypes.CLEAR })
 } as const;
 
 export type TodoAction = ReturnType<ValueOf<typeof actionCreators>>;
@@ -88,8 +88,8 @@ const todoReducer = produce((draft: TodoState, action: TodoAction) => {
       return;
     case TODO_DELETED:
       return;
-    case ActionTypes.CLEAR:
-      return initialState; // returning anything replaces state
+    // case ActionTypes.CLEAR:
+    //   return initialState; // returning anything replaces state
   }
 });
 
@@ -118,15 +118,15 @@ export const useTodos = () => {
 
   // for async actions
   const actions = {
-    addTodoAsync: addTodo(dispatch) 
-  };
+    addTodoAsync: addTodo(dispatch as any)
+  }
 
   return [useTodoState(), actions, dispatch] as [
     ReturnType<typeof useTodoState>,
     typeof actions,
     typeof dispatch
-  ];
-};
+  ]
+}
 
 // for dispatching sync actions
 useTodos.actionCreators = actionCreators;

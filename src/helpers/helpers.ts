@@ -1,18 +1,18 @@
-import { useReducer , useCallback, useState } from "react";
+import { useReducer, useCallback, useState } from "react";
 
 export const delayPromise = (duration: number) =>
-    (...args: any) => new Promise((resolve) => setTimeout(() => resolve(...args), duration))
+  (...args: any) => new Promise((resolve) => setTimeout(() => resolve(...args), duration))
 
 
 export const useReducerWithLogs = <T extends Parameters<typeof useReducer>>(reducer: T[0], initialState: T[1]) => {
-    const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState)
 
-    const dispatchWithLog = (action: any) => {
-        console.table([{ type: action.type, payload: action.payload }])
-        return dispatch(action);
-    }
+  const dispatchWithLog = (action: any) => {
+    console.table([{ type: action.type, payload: action.payload }])
+    return dispatch(action);
+  }
 
-    return [state, dispatchWithLog]
+  return [state, dispatchWithLog]
 }
 
 
@@ -21,12 +21,16 @@ export const useInput = (defaultValue = '') => {
 
   const onChange = useCallback(event => {
     setValue(event.target.value);
-  });
+  }, [setValue])
 
-  return [value, onChange, setValue];
+  return [value, onChange, setValue] as [
+    string,
+    typeof onChange,
+    typeof setValue
+  ];
 }
 
-export const useOnEnter = (callback, inputs) => {
+export const useOnEnter = (callback: any, inputs: any[]) => {
   return useCallback(event => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -35,11 +39,11 @@ export const useOnEnter = (callback, inputs) => {
   }, inputs);
 }
 
-export const useDoubleClick = (onClick, onDoubleClick) => {
-  let clicks = [];
-  let timeout;
+export const useDoubleClick = (onClick: any, onDoubleClick: any) => {
+  let clicks = [] as any[];
+  let timeout: any
 
-  return (event, ...rest) => {
+  return (event: any, ...rest: any) => {
     clicks.push(new Date().getTime());
 
     clearTimeout(timeout);

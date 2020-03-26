@@ -1,4 +1,9 @@
 {
+  "cSpell.ignoreWords": [
+    "todos",
+    "use"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
   // "editor.theme": "vs-dark",
   /**
    * Render vertical lines at the specified columns.

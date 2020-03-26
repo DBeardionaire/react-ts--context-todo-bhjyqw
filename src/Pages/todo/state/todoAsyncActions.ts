@@ -43,7 +43,7 @@ export const addTodo = (dispatch: Dispatch<TodoAction>) => async (
   try {
     dispatch(loading(true));
 
-    const result: TodoModel = await delayPromise(2000)(title).then(newTodo);
+    const result: TodoModel = await delayPromise(2000)(title).then(() => newTodo(title));
 
     dispatch(addedTodo(result));
     dispatch(loading(false));
